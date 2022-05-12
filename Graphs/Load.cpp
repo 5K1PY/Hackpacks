@@ -18,7 +18,7 @@ struct node {
     vector<edge> edges;
     long long value;
 
-    long long time;
+    long long time=-1;
     bool visited=false;
 };
 
@@ -27,7 +27,7 @@ struct graph {
     vector<node> nodes;
 };
 
-graph load_graph(bool valued_nodes=false, bool valued_edges=false, bool decrease=false) {
+graph load_graph(bool valued_nodes=false, bool valued_edges=false, bool decrease=false, bool oriented=false) {
     graph g;
     cin >> g.n >> g.m;
     g.nodes.resize(g.n);
@@ -47,7 +47,9 @@ graph load_graph(bool valued_nodes=false, bool valued_edges=false, bool decrease
             a--; b--;
         }
         g.nodes[a].edges.push_back({a, b, c});
-        g.nodes[b].edges.push_back({a, b, c});
+        if (!oriented) {
+            g.nodes[b].edges.push_back({a, b, c});
+        }
     }
     return g;
 }
