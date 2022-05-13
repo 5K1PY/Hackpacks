@@ -18,7 +18,7 @@ struct node {
     vector<edge> edges;
     long long value;
 
-    long long time=-1;
+    long long in_time=-1, out_time=-1;
     bool visited=false;
 };
 
@@ -27,25 +27,20 @@ struct graph {
     vector<node> nodes;
 };
 
-void bfs(graph * g, int start) {
-    vector<int> now = {start};
-    vector<int> next;
-    int time=0;
-    while (now.size()) {
-        next.resize(0);
-        for (int i: now) {
-            if (g->nodes[i].visited) {
-                continue;
-            }
-            g->nodes[i].visited = true;
-            g->nodes[i].time = time;
-            for (int j=0; j<g->nodes[i].edges.size(); j++) {
-                next.push_back(g->nodes[i].edges[j].next(i));
-            }
-        }
-        time++;
-        now = next;
+int dfs(graph * g, int start, int time=0) {
+    if (g->nodes[start].visited) {
+        return time;
     }
+    // open node
+    g->nodes[start].visited = true;
+    g->nodes[start].in_time = time++;
+
+    for (int j=0; j<g->nodes[start].edges.size(); j++) {
+        time = dfs(g, g->nodes[start].edges[j].next(start), time);
+    }
+    // close node
+    g->nodes[start].out_time = time++;
+    return time;
 }
 
 
@@ -79,8 +74,8 @@ graph load_graph(bool valued_nodes=false, bool valued_edges=false, bool decrease
 
 int main() {
     graph g = load_graph();
-    bfs(&g, 0);
+    dfs(&g, 0);
     for (int i=0; i<g.n; i++) {
-        cout << g.nodes[i].id << ": " << g.nodes[i].time << endl;
+        cout << g.nodes[i].id << ": " << g.nodes[i].in_time << " " << g.nodes[i].out_time << endl;
     }
 }
