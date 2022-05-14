@@ -4,8 +4,10 @@ using namespace std;
 
 
 struct segtree {
+    enum Mode {st_sum, st_min, st_max};
     struct _update {
-        string mode;
+        enum Mode {add, set};
+        Mode mode;
         long long value;
     };
 
@@ -16,28 +18,32 @@ struct segtree {
     };
 
     // ---- change this part ----
-    string mode="sum";
+    Mode mode=st_sum;
 
     // identity value config
     long long identity_value;
     void _init_mode() {
-        if (mode == "sum") {
-            identity_value = 0;
-        } else if (mode == "min") {
-            identity_value = numeric_limits<long long>::max();
-        } else if (mode == "max") {
-            identity_value = numeric_limits<long long>::min();
+        switch (mode)
+        {
+            case st_sum:
+                identity_value = 0; break;
+            case st_min:
+                identity_value = numeric_limits<long long>::max(); break;
+            case st_max:
+                identity_value = numeric_limits<long long>::min(); break;
         }
     }
 
     // operation config and node building
     long long _op(long long a, long long b) {
-        if (mode == "sum") {
-            return a + b;
-        } else if (mode == "min") {
-            return min(a, b);
-        } else if (mode == "max") {
-            return max(a, b);
+        switch (mode)
+        {
+            case st_sum:
+                return a + b; break;
+            case st_min:
+                return min(a, b);; break;
+            case st_max:
+                return max(a, b); break;
         }
     }
     _node _build_node(_node * a, _node * b) {
@@ -50,26 +56,26 @@ struct segtree {
 
     // events evaluation
     _update _merge_updates(_update * a, _update * b) {
-        if (b->mode == "set") {
-            return {"set", b->value};
-        } else if (a->mode == "set" && b->mode == "add") {
-            return {"set", a->value + b->value};
-        } else if (a->mode == "add" && b->mode == "add") {
-            return {"add", a->value + b->value};
+        if (b->mode == _update::set) {
+            return {_update::set, b->value};
+        } else if (a->mode == _update::set && b->mode == _update::add) {
+            return {_update::set, a->value + b->value};
+        } else if (a->mode == _update::add && b->mode == _update::add) {
+            return {_update::add, a->value + b->value};
         }
     }
 
     void _apply_update(_node * a, _update * u) {
-        if (mode == "sum") {
-            if (u->mode == "add") {
+        if (mode == st_sum) {
+            if (u->mode == _update::add) {
                 a->value += (a->end - a->start) * u->value;
-            } else if (u->mode == "set") {
+            } else if (u->mode == _update::set) {
                 a->value = (a->end - a->start) * u->value;
             }
-        } else if (mode == "min" || mode == "max") {
-            if (u->mode == "add") {
+        } else if (mode == st_min || mode == st_max) {
+            if (u->mode == _update::add) {
                 a->value += u->value;
-            } else if (u->mode == "set") {
+            } else if (u->mode == _update::set) {
                 a->value = u->value;
             }
         }
@@ -175,17 +181,17 @@ bool test_query(segtree * s, vector<long long> * vals, int start, int end) {
     long long x = s->query(start, end);
     
     long long res;
-    if (s->mode == "sum") {
+    if (s->mode == segtree::st_sum) {
         res = 0;
         for (int i=start; i<end; i++) {
             res += vals->at(i);
         }
-    } else if (s->mode == "min") {
+    } else if (s->mode == segtree::st_min) {
         res = numeric_limits<long long>::max();
         for (int i=start; i<end; i++) {
             res = min(res, vals->at(i));
         }
-    } else if (s->mode == "max") {
+    } else if (s->mode == segtree::st_max) {
         res = numeric_limits<long long>::min();
         for (int i=start; i<end; i++) {
             res = max(res, vals->at(i));
@@ -233,14 +239,14 @@ int main() {
             if (t == 0) {
                 t = rand() % 10;
                 cout << "set " << start << " " << end << " " << t << endl;
-                s.update(start, end, {"set", t});
+                s.update(start, end, {segtree::_update::set, t});
                 for (int i=start; i<end; i++) {
                     vals[i] = t;
                 }
             } else {
                 t = rand() % 10 + 1;
                 cout << "add " << start << " " << end << " " << t << endl;
-                s.update(start, end, {"add", t});
+                s.update(start, end, {segtree::_update::add, t});
                 for (int i=start; i<end; i++) {
                     vals[i] += t;
                 }
