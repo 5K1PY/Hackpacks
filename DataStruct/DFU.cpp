@@ -22,7 +22,9 @@ bool dfu_same(dfu_item * a, dfu_item * b) {
 }
 
 void dfu_union(dfu_item * a, dfu_item * b) {
-    if (dfu_same(a, b)) {
+    a = dfu_find(a);
+    b = dfu_find(b);
+    if (a == b) {
         return;
     } else if (a->rank > b->rank) {
         b->father = a;
