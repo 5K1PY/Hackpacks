@@ -112,7 +112,7 @@ struct segtree {
         // start and end included
         if (start <= end) {
             return _query(start, end+1);
-        } else if (start > end) {
+        } else {
             // invalid query
             return _query(end, start+1);
         }
