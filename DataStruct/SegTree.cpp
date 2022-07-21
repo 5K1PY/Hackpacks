@@ -111,10 +111,10 @@ struct segtree {
     long long query(int start, int end) {
         // start and end included
         if (start <= end) {
-            _query(start, end+1);
+            return _query(start, end+1);
         } else if (start > end) {
             // invalid query
-            _query(end, start+1);
+            return _query(end, start+1);
         }
     }
 
