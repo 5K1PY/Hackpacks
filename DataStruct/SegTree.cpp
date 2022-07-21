@@ -108,16 +108,18 @@ struct segtree {
         }
     }
 
-    long long query(int start, int end, int index=0) {
-        // start included, end excluded
-
-        if (start > end) {
+    long long query(int start, int end) {
+        // start and end included
+        if (start <= end) {
+            _query(start, end+1);
+        } else if (start > end) {
             // invalid query
-            tie(start, end) = make_pair(end, start);
-        } else if (start == end) {
-            // empty query
-            return identity_value;
+            _query(end, start+1);
         }
+    }
+
+    long long _query(int start, int end, int index=0) {
+        // start included, end excluded
         
         if (end <= nodes[index].start || nodes[index].end <= start) {
             // no intersection
@@ -130,8 +132,8 @@ struct segtree {
             // partial intersection
             _push_updates(index);
             return _op(
-                query(start, end, 2*index+1),
-                query(start, end, 2*index+2)
+                _query(start, end, 2*index+1),
+                _query(start, end, 2*index+2)
             );
         }
     }
@@ -188,17 +190,17 @@ bool test_query(segtree * s, vector<long long> * vals, int start, int end) {
     long long res;
     if (s->mode == segtree::st_sum) {
         res = 0;
-        for (int i=start; i<end; i++) {
+        for (int i=start; i<=end; i++) {
             res += vals->at(i);
         }
     } else if (s->mode == segtree::st_min) {
         res = numeric_limits<long long>::max();
-        for (int i=start; i<end; i++) {
+        for (int i=start; i<=end; i++) {
             res = min(res, vals->at(i));
         }
     } else if (s->mode == segtree::st_max) {
         res = numeric_limits<long long>::min();
-        for (int i=start; i<end; i++) {
+        for (int i=start; i<=end; i++) {
             res = max(res, vals->at(i));
         }
     }
@@ -233,7 +235,7 @@ int main() {
     for (int i=0; i<1000; i++) {
         t = rand() % 2;
         int start = rand() % (n-1);
-        int end = (rand() % (n-start)) + start;
+        int end = (rand() % (n-start-1)) + start;
         
         if (t == 0) {
             if (!test_query(&s, &vals, start, end)) {
