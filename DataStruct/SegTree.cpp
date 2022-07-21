@@ -111,10 +111,15 @@ struct segtree {
     long long query(int start, int end, int index=0) {
         // start included, end excluded
 
-        if (start >= end) {
+        if (start > end) {
             // invalid query
+            tie(start, end) = make_pair(end, start);
+        } else if (start == end) {
+            // empty query
             return identity_value;
-        } else if (end <= nodes[index].start || nodes[index].end <= start) {
+        }
+        
+        if (end <= nodes[index].start || nodes[index].end <= start) {
             // no intersection
             return identity_value;
         } else if (start <= nodes[index].start && nodes[index].end <= end) {
