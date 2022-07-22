@@ -138,7 +138,17 @@ struct segtree {
         }
     }
 
-    void update(int start, int end, _update u, int index=0) {
+    void update(int start, int end, _update u) {
+        // start and end included
+        if (start <= end) {
+            _range_update(start, end+1, u);
+        } else {
+            // invalid query
+            _range_update(end, start+1, u);
+        }
+    }
+    
+    void _range_update(int start, int end, _update u, int index=0) {
         // start included, end excluded
 
         if (start >= end) {
@@ -153,8 +163,8 @@ struct segtree {
         } else {
             // partial intersection
             _push_updates(index);
-            update(start, end, u, 2*index+1);
-            update(start, end, u, 2*index+2);
+            _range_update(start, end, u, 2*index+1);
+            _range_update(start, end, u, 2*index+2);
             nodes[index] = _build_node(&nodes[2*index+1], &nodes[2*index+2]);
         }
     }
@@ -247,14 +257,14 @@ int main() {
                 t = rand() % 10;
                 cout << "set " << start << " " << end << " " << t << endl;
                 s.update(start, end, {segtree::_update::set, t});
-                for (int i=start; i<end; i++) {
+                for (int i=start; i<=end; i++) {
                     vals[i] = t;
                 }
             } else {
                 t = rand() % 10 + 1;
                 cout << "add " << start << " " << end << " " << t << endl;
                 s.update(start, end, {segtree::_update::add, t});
-                for (int i=start; i<end; i++) {
+                for (int i=start; i<=end; i++) {
                     vals[i] += t;
                 }
             }
