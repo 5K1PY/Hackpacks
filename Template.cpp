@@ -8,12 +8,13 @@ using namespace std;
 #define REP(i, j) FOR(i, 0, j, 1)
 #define RREP(i, j) RFOR(i, j, 0, 1)
 #define ALL(a) a.begin(), a.end()
-#define RALL(cont) a.end(), a.begin()
+#define RALL(a) a.end(), a.begin()
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
 #define F first
 #define S second
 #define pii pair<int, int>
 #define MOD 1000000007
+#define PI 3.14159265358979323846
 
 void solve() {
 
