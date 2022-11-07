@@ -2,7 +2,14 @@
 
 using namespace std;
 
+// types
 #define ll long long
+#define vi vector<int>
+#define vll vector<ll>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+
+// iterators
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
 #define REP(i, j) FOR(i, 0, j, 1)
@@ -10,11 +17,17 @@ using namespace std;
 #define ALL(a) a.begin(), a.end()
 #define RALL(a) a.end(), a.begin()
 #define FOREACH(it, l) for (auto it = l.begin(); it != l.end(); it++)
+
+// shortcuts
 #define F first
 #define S second
-#define pii pair<int, int>
+#define PB push_back
+#define MP make_pair
+
+// constants
 #define MOD 1000000007
-#define PI 3.14159265358979323846
+#define PI 3.1415926535897932384626433832795
+
 
 void solve() {
 
