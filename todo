@@ -20,6 +20,7 @@ DP/LongestCommonSubsequence !
 DP/LongestIncreaingSubsequence !
 
 DataStruct/SparseTable !
+DataStruct/Treaps !!
 DataStruct/Trie !!
 DataStruct/SuffixArray
 
