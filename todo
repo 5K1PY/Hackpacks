@@ -1,0 +1,34 @@
+List of imrovements. Exlamation marks mean priority
+
+## Rewrting
+Template improvements !!!
+DataStruct/DFU
+DataStruct/SegTree !!!
+Strings/KMP !!
+
+## Adding
+
+Graphs/Dijskstra !
+Graphs/Kruskal
+Graphs/Prim
+Graphs/BellmanFord !!
+Graphs/FloydWarshall !!
+
+DP/Coinchange
+DP/Knapsack
+DP/LongestCommonSubsequence !
+DP/LongestIncreaingSubsequence !
+
+DataStruct/SparseTable !
+DataStruct/Trie !
+DataStruct/SuffixArray
+
+Strings/AhoCorasick
+Strings/RabinKarp
+
+Flows/Goldberg !!
+
+Numeric/SieveOfErathostenes !!
+Numeric/FFT
+
+## Other
