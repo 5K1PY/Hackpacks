@@ -6,13 +6,13 @@ using namespace std;
 
 vector<ll> factorial(2, 1);
 
-ll mod_pow(ll a, ll b){
+ll mod_pow(ll a, ll b) {
     if (b == 0) return 1;
     ll r = mod_pow(a, b/2);
     return (b % 2 ? r*r*a : r*r) % MOD;
 }
 
-ll mod_inverse(ll a) {
+ll mod_inv(ll a) {
     return mod_pow(a, MOD-2);
 }
 
@@ -28,7 +28,7 @@ ll fact(ll n) {
 }
 
 ll comb_num(ll a, ll b) {
-    return ((fact(a) * mod_inverse(fact(a-b))) % MOD * mod_inverse(fact(b))) % MOD;
+    return ((fact(a) * mod_inv(fact(a-b))) % MOD * mod_inv(fact(b))) % MOD;
 }
 
 // ---- TESTS -----
