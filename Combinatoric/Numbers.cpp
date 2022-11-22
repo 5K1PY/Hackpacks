@@ -7,13 +7,9 @@ using namespace std;
 vector<ll> factorial(2, 1);
 
 ll mod_pow(ll a, ll b){
-    ll ans = 1;
-    while(b) {
-        if (b&1) ans = (ans*a) % MOD;
-        b /= 2;
-        a = (a*a) % MOD;
-    }
-    return ans;
+    if (b == 0) return 1;
+    ll r = mod_pow(a, b/2);
+    return (b % 2 ? r*r*a : r*r) % MOD;
 }
 
 ll mod_inverse(ll a) {
@@ -31,14 +27,20 @@ ll fact(ll n) {
     return factorial[n];
 }
 
-ll combination_number(ll a, ll b) {
+ll comb_num(ll a, ll b) {
     return ((fact(a) * mod_inverse(fact(a-b))) % MOD * mod_inverse(fact(b))) % MOD;
 }
 
 // ---- TESTS -----
 int main() {
-    cout << "100: " << fact(100) << endl;
-    for (int i=0; i<=10; i++) {
-        cout << i << ": " << fact(i) << endl;
+    for (int i=0; i<=100; i++) {
+        ll r = 1;
+        for (int j=0; j<=9; j++) {
+            if (r%MOD != mod_pow(i, j)) {
+                cout << i << j;
+                return 0;
+            }
+            r *= i;
+        }
     }
 }
