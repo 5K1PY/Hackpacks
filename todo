@@ -9,7 +9,7 @@ Strings/KMP !!
 ## Adding
 
 Graphs/Dijskstra !
-Graphs/Kruskal
+Graphs/Kruskal !
 Graphs/Prim
 Graphs/BellmanFord !!
 Graphs/FloydWarshall !!
@@ -20,7 +20,7 @@ DP/LongestCommonSubsequence !
 DP/LongestIncreaingSubsequence !
 
 DataStruct/SparseTable !
-DataStruct/Trie !
+DataStruct/Trie !!
 DataStruct/SuffixArray
 
 Strings/AhoCorasick
