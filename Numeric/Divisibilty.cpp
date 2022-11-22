@@ -1,18 +1,14 @@
 #include <bits/stdc++.h>
 
+#define ll long long
 using namespace std;
 
-long long gcd(long long x, long long y) {
-    if (x > y) {
-        return gcd(y, x);
-    }
-    if (x == 0) {
-        return y;
-    }
-    return gcd(y%x, x);
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, b % a);
 }
 
-long long lcm(long long x, long long y) {
+ll lcm(ll x, ll y) {
     return x*(y / gcd(x, y));
 }
 
