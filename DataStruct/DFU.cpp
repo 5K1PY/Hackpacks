@@ -24,15 +24,12 @@ bool dfu_same(dfu_item * a, dfu_item * b) {
 void dfu_union(dfu_item * a, dfu_item * b) {
     a = dfu_find(a);
     b = dfu_find(b);
-    if (a == b) {
-        return;
-    } else if (a->rank > b->rank) {
-        b->father = a;
-    } else if (a->rank < b->rank) {
+    if (a == b) return;
+    if (a->rank < b->rank) {
         a->father = b;
     } else {
-        a->rank++;
         b->father = a;
+        a->rank += a->rank == b->rank;
     }
 }
 
@@ -52,6 +49,5 @@ int main() {
         if (!dfu_same(&v[0], &v[i+1])) {
             cout << "bug!" << endl;
         }
-    }
-    
+    }   
 }
