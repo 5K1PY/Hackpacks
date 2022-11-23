@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 
 BASE_PATH = ".."
@@ -19,14 +20,28 @@ def addfile(path):
     collection.write("\\section{" + name + "}\n\n")
     collection.write("\\begin{spverbatim}\n")
     with open(path) as file:
-        tests = False
-        for line in file.readlines():
+        lines = file.readlines()
+
+        skipstart = 0
+        while path != template and "using namespace std;" not in lines[skipstart]:
+            skipstart += 1
+        skipstart += path != template
+
+        while lines[skipstart].strip() == "":
+            skipstart += 1
+
+        skipend = len(lines)
+        for i, line in enumerate(lines):
             if "TESTS" in line:
-                tests = True
-                break
-            collection.write(line)
-        if not tests:
+                skipend = i
+        if skipend == len(lines) and path != template:
             print(f"Warning: File {path} doesn't contain TESTS")
+
+        while lines[skipend-1].strip() == "":
+            skipend -= 1
+
+        for line in lines[skipstart:skipend]:
+            collection.write(line)
 
     collection.write("\\end{spverbatim}\n")
     collection.write("\\pagebreak\n")
