@@ -11,6 +11,10 @@ Graphs/Kruskal !
 Graphs/Prim
 Graphs/BellmanFord !!
 Graphs/FloydWarshall !!
+Graphs/TopoSort
+Graphs/Bridges
+Graphs/Articlations
+Graphs/StronglyConnectedComponents
 
 DP/Coinchange
 DP/Knapsack
@@ -28,5 +32,7 @@ Flows/Goldberg !!
 
 Numeric/EulerTotient
 Numeric/FFT
+
+Geometry
 
 ## Other
