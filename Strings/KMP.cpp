@@ -1,60 +1,47 @@
 #include <bits/stdc++.h>
 
 #define ll long long
-
+#define PB push_back
 using namespace std;
 
 vector<int> back;
 
-int _kmp_step(int pos, char c, string * needle) {
+int _step(int pos, char c, string& n) {
     // Uncomment for non-crossing finds
-    // if (pos == needle->size()) {
+    // if (pos == n->size()) {
     //     return 0;
     // }
-    while (pos == needle->size() || (needle->at(pos) != c && pos > 0)) {
+    while (pos == n.size() || (n[pos] != c && pos > 0)) {
         pos = back[pos-1];
     }
-    if (needle->at(pos) == c) {
+    if (n[pos] == c) {
         return pos+1;
     } else {
         return 0;
     }
 }
 
-vector<int> kmp(string haystack, string needle) {
-    back.resize(needle.size(), 0);
-    for (int i=1; i<needle.size(); i++) {
-        back[i] = _kmp_step(i-1, needle[i], &needle);
+vector<int> kmp(string h, string n) {
+    back.resize(n.size(), 0);
+    for (int i=1; i<n.size(); i++) {
+        back[i] = _step(back[i-1], n[i], n);
     }
 
     int state = 0;
     vector<int> results;
-    for (int i=0; i<haystack.size(); i++) {
-        state = _kmp_step(state, haystack[i], &needle);
-        if (state == needle.size()) {
-            results.push_back(i - needle.size() + 1);
+    for (int i=0; i<h.size(); i++) {
+        state = _step(state, h[i], n);
+        if (state == n.size()) {
+            results.PB(i - n.size() + 1);
         }
     }
     return results;
 }
 
-// ----- DRIVER CODE -----
+// ----- TESTS -----
 int main() {
-    ll n;
-    cin >> n;
     string a, b;
-    for (int i=0; i<n; i++) {
-        cin >> a >> b;
-        auto x = kmp(a, b);
-        if (x.size()) {
-            cout << x.size() << endl;
-            for (int i: x) {
-                cout << i+1 << " ";
-            }
-            cout << endl;
-        } else {
-            cout << "Not Found" << endl;
-        }
-        cout << endl;
-    }
+    cin >> a >> b;
+    auto x = kmp(a, b);
+    cout << x.size() << endl;
 }
