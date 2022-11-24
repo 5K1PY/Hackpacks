@@ -10,7 +10,7 @@ Graphs/BellmanFord !!
 Graphs/FloydWarshall !!
 Graphs/TopoSort
 Graphs/Bridges
-Graphs/Articlations
+Graphs/Articulations
 Graphs/StronglyConnectedComponents
 
 DP/Coinchange
