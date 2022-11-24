@@ -8,6 +8,8 @@ using namespace std;
 #define vll vector<ll>
 #define pii pair<int, int>
 #define pll pair<ll, ll>
+#define vpii vector<pii>
+#define vpll vector<pll>
 
 // iterators
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
@@ -27,7 +29,46 @@ using namespace std;
 // constants
 #define MOD 1000000007
 #define PI 3.1415926535897932384626433832795
+#define INF numeric_limits<ll>::max()
+#define NINF numeric_limits<ll>::min()
+#define INF_I numeric_limits<int>::max()
+#define NINF_I numeric_limits<int>::min()
 
+template<typename A, typename B>
+ostream& operator<<(ostream& os, const pair<A, B>& p) {
+    os << p.F << " " << p.S;
+    return os;
+}
+
+string SEP = " ";
+template<typename T>
+ostream& operator<<(ostream& os, const vector<T>& v) {
+    string s;
+    for (auto&& x : v) {
+        os << s << x;
+        s = SEP;
+    }
+    return os;
+}
+
+struct DBG {};
+DBG dbg;
+
+template<typename T>
+DBG& operator<<(DBG& d, const T& x) {
+#ifdef DEBUG
+    cout << x;
+#endif
+    return dbg;
+}
+
+// Support for endl
+DBG& operator<<(DBG& d, ostream& (*f)(ostream& os)) {
+#ifdef DEBUG
+    cout << f;
+#endif
+    return dbg;
+}
 
 void solve() {
 
