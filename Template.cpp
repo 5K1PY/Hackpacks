@@ -4,6 +4,7 @@ using namespace std;
 
 // types
 #define ll long long
+#define int long long
 #define vi vector<int>
 #define vll vector<ll>
 #define pii pair<int, int>
@@ -74,7 +75,7 @@ void solve() {
 
 }
 
-int main() {
+signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
