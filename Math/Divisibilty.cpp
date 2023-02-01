@@ -33,7 +33,7 @@ void erathostenes(ll n) {
     primes[0] = primes[1] = 0;
     REP(i, n+1) {
         if (primes[i]) {
-            FOR(j, i*i, n, i) primes[j] = 0;
+            for(ll j=i*i; j<n; j+=i) primes[j] = 0;
         }
     }
 }
