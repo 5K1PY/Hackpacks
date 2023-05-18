@@ -6,8 +6,8 @@
 using namespace std;
 
 ll gcd(ll a, ll b) {
-    if (b == 0) return a;
-    return gcd(b, b % a);
+    if (a == 0 || b == 0) return max(a, b);
+    return gcd(b % a, a);
 }
 
 ll extgcd(ll a, ll b, ll& x, ll& y) {
