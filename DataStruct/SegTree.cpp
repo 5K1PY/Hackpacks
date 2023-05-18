@@ -31,7 +31,7 @@ struct segtree {
     }
 
     ll op(ll a, ll b) {
-        return max(a, b);
+        return a + b;
     }
 
     // queries
@@ -40,7 +40,7 @@ struct segtree {
     }
 
     ll q(int i, int l, int r, int s, int e) {
-        push(i);
+        push(i, s, e);
         if (s >= r || e <= l) return ival;
         if (l <= s && e <= r) return v[i];
         int m = (s+e)/2;
@@ -53,16 +53,16 @@ struct segtree {
     }
 
     void u(int i, int l, int r, int s, int e, ll val) {
-        push(i);
+        push(i, s, e);
         if (s >= r || e <= l) return;
-        if (l <= s && e <= r) { up[i] += val; push(i); return; }    
+        if (l <= s && e <= r) { up[i] += val; push(i, s, e); return; }    
         int m = (s+e)/2;
         u(2*i+1, l, r, s, m, val); u(2*i+2, l, r, m, e, val);
         v[i] = op(v[2*i+1], v[2*i+2]);
     }
 
-    void push(int i) {
-        v[i] += up[i];
+    void push(int i, int l, int r) {
+        v[i] += up[i]*(r-l);
         if (i < n/2) {
             up[2*i+1] += up[i];
             up[2*i+2] += up[i];
@@ -78,9 +78,9 @@ bool test_query(segtree * s, vector<long long> * vals, int start, int end) {
     cout << "q? " << start << " " << end << endl;
     long long x = s->query(start, end);
     
-    ll res = numeric_limits<long long>::min();
+    ll res = 0;
         for (int i=start; i<=end; i++) {
-            res = max(res, vals->at(i));
+            res += vals->at(i);
         }
         cout << "q! (" << x << ", " << res << ")" << endl;
     
