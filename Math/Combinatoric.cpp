@@ -9,7 +9,7 @@ vector<ll> factorial(2, 1);
 ll mod_pow(ll a, ll b) {
     if (b == 0) return 1;
     ll r = mod_pow(a, b/2);
-    return (b % 2 ? r*r*a : r*r) % MOD;
+    return (b % 2 ? (r*r % MOD)*a : r*r) % MOD;
 }
 
 ll mod_inv(ll a) {
@@ -18,10 +18,8 @@ ll mod_inv(ll a) {
 
 ll fact(ll n) {
     if (factorial.size() <= n) {
-        ll so_far = factorial.size();
-        factorial.resize(n+1, 1); 
-        for (ll i=so_far; i<=n; i++) {
-            factorial[i] = (i*factorial[i-1]) % MOD;
+        for (ll i=factorial.size(); i<=n; i++) {
+            factorial.push_back(i*factorial[i-1] % MOD);
         }
     }
     return factorial[n];
